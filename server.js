@@ -1,11 +1,20 @@
 // 必要なライブラリをインポートします
 const express = require('express');
 const path = require('path');
+const cors = require('cors'); // ★変更点: corsライブラリをインポート
 
 // expressアプリを初期化します
 const app = express();
 // サーバーが待ち受けるポート番号を設定します。Renderが指定するポート、またはローカルテスト用に3000番を使います
 const PORT = process.env.PORT || 3000;
+
+// ★変更点: 特定のドメインからの通信を許可するCORS設定
+// これにより、irohatec.comに置いたHTMLから、このサーバー(Render上)へのアクセスが可能になります。
+const corsOptions = {
+  origin: 'https://irohatec.com'
+};
+app.use(cors(corsOptions));
+
 
 // JSON形式のリクエストボディを解析できるようにします
 app.use(express.json());
