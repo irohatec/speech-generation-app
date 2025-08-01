@@ -37,8 +37,8 @@ app.post('/api/translate', async (req, res) => {
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
     
     // ★★★★★ 変更点 ★★★★★
-    // AIへの指示（プロンプト）を、より高品質な翻訳を促す内容に改良しました。
-    const prompt = `あなたはプロの翻訳家です。以下の文章を「${sourceLang}」から「${targetLang}」へ、自然で分かりやすく、ビジネス用途に適した文章に翻訳してください。もし文章が告知や宣伝の場合は、魅力的に聞こえるように工夫してください。翻訳する文章： "${text}"`;
+    // AIへの指示を、翻訳結果だけを出力するように、より直接的な命令に変更しました。
+    const prompt = `以下の「原文」を「${sourceLang}」から「${targetLang}」へ翻訳してください。翻訳結果のテキストだけを出力し、他の説明や前置きは一切含めないでください。 原文： "${text}"`;
     
     const payload = {
       contents: [{
