@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // 特定のドメインからの通信を許可するCORS設定
 const corsOptions = {
-  origin: ['https://irohatec.com', 'http://localhost:3000'] // ローカルテスト用も許可
+  origin: ['https://irohatec.com', 'https://www.irohatec.com', 'http://localhost:3000'] // ★変更点: www付きのドメインを追加
 };
 app.use(cors(corsOptions));
 app.use(express.json());
