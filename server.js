@@ -6,11 +6,10 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 特定のドメインからの通信を許可するCORS設定
-const corsOptions = {
-  origin: ['https://irohatec.com', 'https://www.irohatec.com', 'http://localhost:3000'] // ★変更点: www付きのドメインを追加
-};
-app.use(cors(corsOptions));
+// ★★★★★ 変更点 ★★★★★
+// CORS設定を更新し、一時的にすべてのドメインからのアクセスを許可します。
+// これにより、CORSがエラーの原因であるかを確実に切り分けます。
+app.use(cors());
 app.use(express.json());
 
 // APIキーの存在チェック
