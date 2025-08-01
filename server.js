@@ -6,9 +6,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ★★★★★ 変更点 ★★★★★
-// CORS設定を更新し、一時的にすべてのドメインからのアクセスを許可します。
-// これにより、CORSがエラーの原因であるかを確実に切り分けます。
+// CORS設定
 app.use(cors());
 app.use(express.json());
 
@@ -32,15 +30,15 @@ app.post('/api/translate', async (req, res) => {
       return res.status(400).json({ error: 'テキスト、翻訳元言語、翻訳先言語が必要です。' });
     }
     
-    // もし翻訳元と翻訳先が同じ言語なら、APIを呼ばずにそのままテキストを返す
     if (sourceLang === targetLang) {
       return res.json({ translatedText: text });
     }
 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
     
-    // Geminiに送るプロンプトを作成
-    const prompt = `Translate the following text from ${sourceLang} to ${targetLang}: ${text}`;
+    // ★★★★★ 変更点 ★★★★★
+    // AIへの指示（プロンプト）を、より高品質な翻訳を促す内容に改良しました。
+    const prompt = `あなたはプロの翻訳家です。以下の文章を「${sourceLang}」から「${targetLang}」へ、自然で分かりやすく、ビジネス用途に適した文章に翻訳してください。もし文章が告知や宣伝の場合は、魅力的に聞こえるように工夫してください。翻訳する文章： "${text}"`;
     
     const payload = {
       contents: [{
